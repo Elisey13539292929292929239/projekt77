@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Edit Anime</title>
+  <link rel="stylesheet" href="/css/add-edit.css" />
+</head>
+<body>
+  <%- include('partials/header'); %>
+  <main>
+    <h1>Edit Anime</h1>
+    <form action="/edit" method="POST">
+      <input type="hidden" name="id" value="<%= anime._id %>" />
+
+      <label for="title">Title:</label>
+      <input type="text" id="title" name="title" value="<%= anime.title %>" required />
+
+      <label for="imageUrl">Image URL:</label>
+      <input type="text" id="imageUrl" name="imageUrl" value="<%= anime.imageUrl %>" />
+
+      <label for="overview">Overview:</label>
+      <textarea id="overview" name="overview" rows="4"><%= anime.overview %></textarea>
+
+      <label for="genre">Genre (comma-separated):</label>
+      <input type="text" id="genre" name="genre" value="<%= anime.details[0]?.genre?.join(', ') %>" />
+
+      <label for="episodes">Episodes:</label>
+      <input type="number" id="episodes" name="episodes" value="<%= anime.details[0]?.episodes || '' %>" />
+
+      <label for="studio">Studio:</label>
+      <input type="text" id="studio" name="studio" value="<%= anime.details[0]?.studio?.join(', ') %>" />
+
+      <label for="year">Year:</label>
+      <input type="text" id="year" name="year" value="<%= anime.details[0]?.year?.join(', ') %>" />
+
+      <label for="trailerUrl">Trailer URL (optional):</label>
+      <input type="text" id="trailerUrl" name="trailerUrl" value="<%= anime.trailerUrl %>" />
+
+      <button type="submit">Save Changes</button>
+    </form>
+  </main>
+</body>
+</html>

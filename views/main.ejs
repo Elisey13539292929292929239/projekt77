@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnimeSync</title>
+
+    <link rel="stylesheet" href="/css/main.css">
+
+    <style>
+      .quote-container {
+        text-align: center;
+        max-width: 800px;
+        margin: 2rem auto 1.5rem auto;
+        padding: 0 1rem;
+      }
+      .quote-title {
+        font-weight: bold;
+        font-size: 1.4rem;
+        margin-bottom: 0.5rem;
+      }
+      .quote-text {
+        font-style: italic;
+        font-weight: 500;
+      }
+    </style>
+</head>
+
+<body>
+    <%- include('partials/header'); %>
+
+    <main>
+        <section class="hero">
+            <h2>Welcome to AnimeSync</h2>
+            <p>Discover the best anime series, characters, and more!</p>
+        </section>
+
+        <div class="quote-container">
+            <h3 class="quote-title">Quote of the day:</h3>
+            <p id="quote-text" class="quote-text">Loading...</p>
+        </div>
+
+        <div class="anime">
+            <% for (let i = 0; i < anime.length; i++) { %>
+                <div class="anime-cover" data-idAnime="<%= anime[i]._id %>">
+                    <img src="<%= anime[i].imageUrl %>" alt="<%= anime[i].title %>">
+                    <h2><%= anime[i].title %></h2>
+                </div>
+                <% if ((i + 1) % 3 === 0 && i !== anime.length - 1) { %>
+                    </div><div class="anime">
+                <% } %>
+            <% } %>
+        </div>
+
+        <% if (liked.length > 0) { %>
+            <h3>Anime that you Like</h3>
+            <div class="anime">
+                <% for (let i = 0; i < liked.length; i++) { %>
+                    <div class="anime-cover" data-idAnime="<%= liked[i]._id %>">
+                        <img src="<%= liked[i].imageUrl %>" alt="<%= liked[i].title %>">
+                        <h2><%= liked[i].title %></h2>
+                    </div>
+                    <% if ((i + 1) % 3 === 0 && i !== liked.length - 1) { %>
+                        </div><div class="anime">
+                    <% } %>
+                <% } %>
+            </div>
+        <% } %>
+    </main>
+
+    <script src="scripts/anime-info.js"></script>
+    <script src="scripts/search.js"></script>
+
+    <script>
+      async function loadQuoteOfTheDay() {
+        const quoteEl = document.getElementById('quote-text');
+        try {
+          const res  = await fetch('https://api.animechan.io/v1/quotes/random');
+          const json = await res.json();
+          const q    = json.data;
+
+          quoteEl.textContent = `"${q.content}" — ${q.character.name} (${q.anime.name})`;
+        } catch (err) {
+          quoteEl.textContent = 'Could not load quote.';
+          console.error('Quote fetch error:', err);
+        }
+      }
+
+      loadQuoteOfTheDay();
+    </script>
+</body>
+</html>

@@ -1,10 +1,10 @@
 <h1>Quick Installation Guide:</h1>
 
 - Clone the repository from GitHub:  
-  `git clone https://github.com/Elisey13539292929292929239/projekt77.git`
+  `https://github.com/Elisey13539292929292929239/projekt77.git`
 
 - Change to the project directory:  
-  `cd AnimeSync-Project`
+  `cd projekt77`
 
 - Build and start the application using Docker Compose:  
   `docker-compose up --build`
